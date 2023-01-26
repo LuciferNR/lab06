@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lab06/registerpage.dart';
+import 'package:lab06/services/auth_service.dart';
+import 'package:lab06/successpage.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -45,6 +47,22 @@ class _LoginPageState extends State<LoginPage> {
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       print("OK");
+                      AuthService.loginUser(
+                              _emailController.text, _passwordController.text)
+                          .then((value) {
+                        if (value == 1) {
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => SuccessPage(),
+                              ));
+                          // Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //       builder: (context) => SuccessPage(),
+                          //     ));
+                        }
+                      });
                     }
                   },
                   child: const Text("Login")),
